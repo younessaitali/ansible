@@ -1,0 +1,32 @@
+- name: add copyq
+  become: true
+  apt_repository:
+   repo: ppa:hluk/copyq
+   state: present
+   update_cache: True
+  tags:
+    - install
+    - productivity
+
+- name: Albert
+  shell: echo 'deb http://download.opensuse.org/repositories/home:/manuelschneid3r/xUbuntu_22.10/ /' | tee /etc/apt/sources.list.d/home:manuelschneid3r.list && curl -fsSL https://download.opensuse.org/repositories/home:manuelschneid3r/xUbuntu_22.10/Release.key | gpg --dearmor |  tee /etc/apt/trusted.gpg.d/home_manuelschneid3r.gpg > /dev/null && apt update
+  tags:
+    - install
+    - productivity
+
+- name: zoxide
+  shell: curl -sS https://raw.githubusercontent.com/ajeetdsouza/zoxide/main/install.sh | bash
+  tags:
+    - install
+    - productivity
+
+- name: Install packages
+  become: true
+  apt:
+    name: [ "tmux", "fzf", "gimp", "xclip", "screenkey", "tldr", "ripgrep", "flameshot", "copyq" , "albert","exa", "bat", "fd-find", "tokei"]
+    update_cache: true
+    install_recommends: true
+    allow_change_held_packages: true
+  tags:
+    - install
+    - productivity

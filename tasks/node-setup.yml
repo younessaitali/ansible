@@ -1,0 +1,23 @@
+- name: make folder for fnm
+  shell: mkdir ~/.fnm
+  tags:
+  - install
+  - node
+
+- name: install fnm
+  shell: cd ~ && curl -fsSL https://fnm.vercel.app/install | bash -s -- --install-dir "./.fnm"
+  tags:
+  - install
+  - node
+
+- name: add path
+  shell: export PATH="~/.fnm:$PATH" && eval "`fnm env`"
+  tags:
+  - install
+  - node
+
+- name: Install node 16
+  shell: ~/.fnm/fnm install 16
+  tags:
+  - install
+  - node

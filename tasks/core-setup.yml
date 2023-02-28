@@ -1,0 +1,91 @@
+- name: Install System Packages 1 (build-essential, cmake, pkg-config, pthread)
+  become: true
+  apt:
+    name: ["build-essential", "cmake", "pkg-config", "libpthread-stubs0-dev"]
+  tags:
+    - install
+    - neovim
+    - core
+    - awesome
+
+- name: Install System Packages 2 (lua, unzip, libtool, libtool-bin, gettext)
+  become: true
+  apt:
+    name: [ "lua5.1", "unzip", "libtool", "libtool-bin", "gettext"]
+  tags:
+    - install
+    - neovim
+    - core
+    - awesome
+
+- name: Install System Packages 3
+  become: true
+  apt:
+    name: [ "compton", "curl", "htop", "golang", "lsof", "ccache", "ninja-build", "python3-pip", "dconf-editor", "pavucontrol", "moreutils", "clangd" ]
+  tags:
+    - install
+    - core
+
+- name: Install Rust
+  become: true
+  shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  tags:
+    - install
+    - core
+    - alacritty
+
+- name: Install Rust Packages
+  become: true
+  shell: rustup component add rls rust-analysis rust-src
+  tags:
+    - install
+    - core
+    - alacritty
+
+- name: Install Alacritty
+  become: true
+  shell: cargo install alacritty
+  tags:
+    - install
+    - core
+    - alacritty
+
+- name: Install System Packages 4
+  become: true
+  apt:
+    name: [ "build-dep", "awesome" ]
+  tags:
+    - install
+    - core
+    - awesome
+- name: Install Clang
+  become: true
+  apt:
+    name: ["clang", "clang-11", "clang-12", "clangd", "clangd-10", "clangd-11", "clangd-12"]
+  tags:
+    - install
+    - neovim
+    - core
+    - awesome
+
+- name: Clone awesome
+  ansible.builtin.git:
+    repo: 'https://github.com/awesomewm/awesome'
+    dest: "{{ lookup('env', 'HOME') }}/awesome"
+  tags:
+    - install
+    - core
+    - awesome
+- name: Build awesome
+  shell: "cd {{ lookup('env', 'HOME') }}/awesome && make package"
+  tags:
+    - install
+    - core
+    - awesome
+- name: Install awesome
+  become: true
+  shell: "cd {{ lookup('env', 'HOME') }}/awesome/build && apt install ./*.deb"
+  tags:
+    - install
+    - core
+    - awesome

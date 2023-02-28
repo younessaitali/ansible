@@ -1,0 +1,86 @@
+# - name: fnm
+#   shell: ~/.fnm/fnm install 16
+#   tags:
+#   - install
+#   - node
+# - for docker
+- name: Install sudo
+  become: true
+  apt:
+    name: ["sudo" ]
+  tags:
+    - install
+    - node
+
+- name: Install Yarn
+  npm:
+    name: yarn
+    global: yes
+  tags:
+    - install
+    - node
+  args:
+     executable: /bin/bash
+- name: Install eslint
+  npm:
+    name: eslint
+    global: yes
+  tags:
+    - install
+    - node
+  args:
+     executable: /bin/bash
+- name: Install Typescript server
+  npm:
+    name: typescript-language-server
+    global: yes
+  tags:
+    - install
+    - node
+  args:
+     executable: /bin/bash
+- name: Install Typescript
+  npm:
+    name: typescript
+    global: yes
+  tags:
+    - install
+    - node
+  args:
+     executable: /bin/bash
+- name: Install TS-Node
+  npm:
+    name: ts-node
+    global: yes
+  tags:
+    - install
+    - node
+  args:
+     executable: /bin/bash
+- name: Install pnpm
+  npm:
+    name: pnpm
+    global: yes
+  tags:
+    - install
+    - node
+  args:
+     executable: /bin/bash
+- name: Install ni
+  npm:
+    name: "@antfu/ni"
+    global: yes
+  tags:
+    - install
+    - node
+  args:
+     executable: /bin/bash
+- name: Install jest
+  npm:
+    name: jest
+    global: yes
+  tags:
+    - install
+    - node
+  args:
+     executable: /bin/bash
